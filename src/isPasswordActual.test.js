@@ -1,6 +1,6 @@
 'use strict';
 
-describe(`Function 'splitInteger':`, () => {
+describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
 
   it(`should be declared`, () => {
