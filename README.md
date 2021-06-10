@@ -10,8 +10,8 @@ If more than 60 days have passed since the last password change, the function re
 Examples (let it be Jun 10, 2021 for today):
 ```js
 isPasswordActual(2020, 6, 9) === `Immediately change the password!`
-splitInteger(2021, 6, 1) === `Password is actual.`
-splitInteger(2021, 5, 1) === `Your should change your password.`
+isPasswordActual(2021, 6, 1) === `Password is actual.`
+isPasswordActual(2021, 5, 1) === `Your should change your password.`
 ```
 
 [Guideline](https://github.com/mate-academy/js_task-guideline/blob/master/README.md)
