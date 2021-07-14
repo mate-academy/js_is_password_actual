@@ -1,5 +1,5 @@
 Write tests for the `isPasswordActual` function. This function:
-- takes three numbers: `year` - year,` month` - month, `date` - the date when the password was last updated;
+- takes three numbers: `year` - year, `month` - month, `date` - the date when the password was last updated;
 - converts the received numbers into a date and checks how many days have passed since that date;
 - returns a message about whether to change the password.
 
