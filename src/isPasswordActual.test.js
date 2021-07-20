@@ -50,7 +50,7 @@ describe(`Function 'isPasswordActual':`, () => {
 
   it(`if 59 days have passed since the last 
   password change, return message: 'You should change your password.'`, () => {
-    expect(isPasswordActual(2021, 4, 31))
+    expect(isPasswordActual(2021, 5, 1))
       .toBe('You should change your password.');
   });
 });
