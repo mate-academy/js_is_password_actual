@@ -24,13 +24,13 @@ describe(`Function 'isPasswordActual':`, () => {
       .toBe('Password is actual.');
   });
 
-  it(`should ask to change the password if was changed 31`, () => {
+  it(`should ask to change the password if was changed 31 days ago`, () => {
     expect(isPasswordActual(2021, 6, 19))
       .toBe('You should change your password.');
   });
 
   it(`should ask to change the password in the imperative form
-  if was changed 61`, () => {
+  if was changed 61 days ago`, () => {
     expect(isPasswordActual(2021, 5, 20))
       .toBe('Immediately change the password!');
   });
@@ -42,5 +42,11 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(isPasswordActual(result.getFullYear(),
       result.getMonth(), result.getDate()))
       .toBe('Password is actual.');
+  });
+
+  it(`should return "Password is actual" if the password 
+    was changed 60 day ago`, () => {
+    expect(isPasswordActual(2021, 5, 21))
+      .toBe('You should change your password.');
   });
 });
