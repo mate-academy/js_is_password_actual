@@ -8,7 +8,7 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should return a string`, () => {
-
+    expect(typeof isPasswordActual()).toBe('string');
   });
 
   it(`should ask to change the password if was changed a year ago`, () => {
