@@ -9,7 +9,7 @@
  */
 function isPasswordActual(year, month, date) {
   const actualDate = new Date(Date.now()).getTime();
-  const lastEditedDate = new Date(year, month, date).getTime();
+  const lastEditedDate = new Date(year, month - 1, date).getTime();
   const diff = actualDate - lastEditedDate;
 
   const days = Math.floor(diff / (60 * 60 * 24 * 1000));
