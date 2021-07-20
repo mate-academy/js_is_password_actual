@@ -35,4 +35,10 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(isPasswordActual(2021, 6, 20))
       .toBe('Password is actual.');
   });
+
+  it(`User created a password today, display a message: 
+  "Password is actual."`, () => {
+    expect(isPasswordActual(2021, 7, 20))
+      .toBe('Password is actual.');
+  });
 });
