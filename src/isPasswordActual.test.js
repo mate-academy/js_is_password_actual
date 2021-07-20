@@ -50,4 +50,9 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(isPasswordActual(2021, 5, 22))
       .toBe('You should change your password.');
   });
+
+  it(`shouldn't ask to change password if was changed today ago`, () => {
+    expect(isPasswordActual(2021, 7, 20))
+      .toBe('Password is actual.');
+  });
 });
