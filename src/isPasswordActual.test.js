@@ -48,5 +48,10 @@ describe(`Function 'isPasswordActual':`, () => {
       .toBe('You should change your password.');
   });
 
+  it(`should return the message if password was changed today`, () => {
+    expect(isPasswordActual(2021, 7, 20))
+      .toBe('Password is actual.');
+  });
+
   // write more tests here
 });
