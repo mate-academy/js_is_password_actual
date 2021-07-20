@@ -16,24 +16,24 @@ describe(`Function 'isPasswordActual':`, () => {
       .toBe('Immediately change the password!');
   });
 
-  it(`if more than 30 days have passed since the last 
+  it(`if 49 days have passed since the last 
   password change, return message: 'You should change your password.'`, () => {
     expect(isPasswordActual(2021, 6, 1))
       .toBe('You should change your password.');
   });
 
-  it(`if 30 days or less, return message: 'Password is actual.'`, () => {
+  it(`if 10 days, return message: 'Password is actual.'`, () => {
     expect(isPasswordActual(2021, 7, 10))
       .toBe('Password is actual.');
   });
 
-  it(`if 30 days or less, return message: 'Password is actual.'`, () => {
+  it(`if today, return message: 'Password is actual.'`, () => {
     expect(isPasswordActual(2021, 6, 21))
       .toBe('Password is actual.');
   });
 
-  it(`if 30 days or less, return message: 'Password is actual.'`, () => {
-    expect(isPasswordActual(2025, 8, 1))
+  it(`if 29 days return message: 'Password is actual.'`, () => {
+    expect(isPasswordActual(2021, 6, 21))
       .toBe('Password is actual.');
   });
 
@@ -46,5 +46,11 @@ describe(`Function 'isPasswordActual':`, () => {
   more than 60 days`, () => {
     expect(isPasswordActual(2021, 1, 1))
       .toBe('Immediately change the password!');
+  });
+
+  it(`if 59 days have passed since the last 
+  password change, return message: 'You should change your password.'`, () => {
+    expect(isPasswordActual(2021, 4, 31))
+      .toBe('You should change your password.');
   });
 });
