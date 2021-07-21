@@ -11,7 +11,8 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(typeof isPasswordActual()).toBe('string');
   });
 
-  it(`should ask to change the password if was changed a year ago`, () => {
+  it(`should ask imidiatly change the password
+  if was changed a year ago`, () => {
     expect(isPasswordActual(2020, 7, 21))
       .toBe('Immediately change the password!');
   });
