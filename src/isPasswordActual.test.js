@@ -8,7 +8,7 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should return a string`, () => {
-
+    expect(typeof isPasswordActual('qwer')).toBe('string');
   });
 
   it(`should ask to change the password if was changed a year ago`, () => {
@@ -16,5 +16,33 @@ describe(`Function 'isPasswordActual':`, () => {
       .toBe('Immediately change the password!');
   });
 
-  // write more tests here
+  it(`should ask to change the password 
+  if was changed more than 60 days`, () => {
+    expect(isPasswordActual(2021, 8, 22))
+      .toBe('Immediately change the password!');
+  });
+
+  it(`shouldnt ask to change the password 
+  if was changed 30 days or less`, () => {
+    expect(isPasswordActual(2021, 9, 22))
+      .toBe('Password is actual.');
+  });
+
+  it(`should ask to change the password 
+  if was changed more than 30 days`, () => {
+    expect(isPasswordActual(2021, 9, 1))
+      .toBe('You should change your password.');
+  });
+
+  // A change in the code is required
+  it(`should return an error masagge
+  if original consists of an empty date`, () => {
+    expect(isPasswordActual(0, 0, 0)).toBe('Immediately change the password!');
+  });
+
+  // A change in the code is required
+  it(`should return an error masagge
+  if original consists of an unreal date`, () => {
+    expect(isPasswordActual(2023, 10, 22)).toBe('Password is actual.');
+  });
 });
