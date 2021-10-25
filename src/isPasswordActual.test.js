@@ -78,16 +78,6 @@ describe(`Function 'isPasswordActual':`, () => {
       actualDate.getDate())).toBe('Password is actual.');
   });
 
-  it(`should return 'Password is actual' if it was changed 
-      29 days ago `, () => {
-    const actualDate = new Date(Date.now());
-
-    actualDate.setDate(actualDate.getDate() - 29);// implicitely month,year
-
-    expect(isPasswordActual(actualDate.getFullYear(), actualDate.getMonth() + 1,
-      actualDate.getDate())).toBe('Password is actual.');
-  });
-
   it(`should return 'Password is actual' if password is set tomorrow `, () => {
     const actualDate = new Date(Date.now());
 
