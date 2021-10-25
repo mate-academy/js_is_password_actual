@@ -34,15 +34,9 @@ describe(`Function 'isPasswordActual':`, () => {
       .toBe('Password is actual.');
   });
 
-  it(`should return "Password is actual."
-  if password was changed less than 30`, () => {
-    expect(isPasswordActual(2021, 10, 24))
-      .toBe('Password is actual.');
-  });
-
   it(`should return "You should change your password."
   if password was changed 60 days ago`, () => {
-    expect(isPasswordActual(2021, 8, 25))
+    expect(isPasswordActual(2021, 8, 27))
       .toBe('You should change your password.');
   });
 });
