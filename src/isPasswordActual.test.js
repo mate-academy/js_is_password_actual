@@ -17,12 +17,12 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should ask to change the password 
-  if was changed more than 60 days`, () => {
-    expect(isPasswordActual(2021, 8, 22))
+  if was changed 60 and more days ago`, () => {
+    expect(isPasswordActual(2021, 8, 25))
       .toBe('Immediately change the password!');
   });
 
-  it(`shouldnt ask to change the password 
+  it(`shouldn't ask to change the password 
   if was changed 30 days or less`, () => {
     expect(isPasswordActual(2021, 9, 27))
       .toBe('Password is actual.');
@@ -30,13 +30,30 @@ describe(`Function 'isPasswordActual':`, () => {
 
   it(`should ask to change the password 
   if was changed more than 30 days`, () => {
-    expect(isPasswordActual(2021, 9, 1))
+    expect(isPasswordActual(2021, 9, 25))
       .toBe('You should change your password.');
   });
 
-  it(`shouldnt ask to change the password 
+  it(`shouldn't ask to change the password 
   if was changed today`, () => {
     expect(isPasswordActual(2021, 10, 26))
       .toBe('Password is actual.');
+  });
+
+  it(`should ask to change the password 
+  if was changed 59 days ago`, () => {
+    expect(isPasswordActual(2021, 8, 27))
+      .toBe('You should change your password.');
+  });
+
+  it(`shouldn't ask to change the password 
+  if was changed yesterday`, () => {
+    expect(isPasswordActual(2021, 10, 26))
+      .toBe('Password is actual.');
+  });
+
+  it(`should ask to change the password if was changed a 11 month ago`, () => {
+    expect(isPasswordActual(2020, 12, 9))
+      .toBe('Immediately change the password!');
   });
 });
