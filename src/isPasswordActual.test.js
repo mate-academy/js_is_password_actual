@@ -2,6 +2,12 @@
 
 describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
+  const date = new Date(Date.now());
+  const today = {
+    year: date.getUTCFullYear(),
+    month: date.getMonth() + 1,
+    date: date.getDate(),
+  };
 
   it(`should be declared`, () => {
     expect(isPasswordActual).toBeInstanceOf(Function);
@@ -12,7 +18,9 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should ask to change the password if was changed a year ago`, () => {
-    expect(isPasswordActual(2020, 6, 9))
+    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
+
+    expect(lastYear)
       .toBe('Immediately change the password!');
   });
 
