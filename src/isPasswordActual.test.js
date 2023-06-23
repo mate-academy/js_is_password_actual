@@ -24,5 +24,44 @@ describe(`Function 'isPasswordActual':`, () => {
       .toBe('Immediately change the password!');
   });
 
-  // write more tests here
+  it(`should return 'Password is actual.'
+   if less than or equal to 30 days have passed since 
+   the last password change`, () => {
+    const within30Days
+     = isPasswordActual(today.year, today.month, today.date - 30);
+
+    expect(within30Days).toBe('Password is actual.');
+
+    const oneDayAgo = isPasswordActual(today.year, today.month, today.date - 1);
+
+    expect(oneDayAgo).toBe('Password is actual.');
+  });
+
+  it(`should return 'You should change your password.' 
+  if more than 30 days have passed since the last password change`,
+  () => {
+    const moreThan30Days
+     = isPasswordActual(today.year, today.month, today.date - 31);
+
+    expect(moreThan30Days).toBe('You should change your password.');
+
+    const oneMonthAgo
+     = isPasswordActual(today.year, today.month - 1, today.date);
+
+    expect(oneMonthAgo).toBe('You should change your password.');
+  });
+
+  it(`should return 'Immediately change the password!'
+   if more than 60 days have passed since the last password change`,
+  () => {
+    const moreThan60Days
+     = isPasswordActual(today.year, today.month, today.date - 61);
+
+    expect(moreThan60Days).toBe('Immediately change the password!');
+
+    const twoMonthsAgo
+     = isPasswordActual(today.year, today.month - 2, today.date);
+
+    expect(twoMonthsAgo).toBe('Immediately change the password!');
+  });
 });
