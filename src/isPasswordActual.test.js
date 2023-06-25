@@ -14,7 +14,7 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should return a string`, () => {
-    // Add your assertion here
+    expect(typeof isPasswordActual(2020, 1, 1)).toBe('string');
   });
 
   it(`should ask to change the password if it was changed a year ago`, () => {
@@ -52,10 +52,12 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should return 'You should change your password.'
-     if more than 30 days have passed since the last password change`, () => {
-    const moreThan30Days = new Date(today);
+   if more than 30 days have passed since the last password change`, () => {
+    const initialDate = new Date(today.year, today.month - 1, today.date);
 
-    moreThan30Days.setDate(today.date - 31);
+    const moreThan30Days = new Date(initialDate);
+
+    moreThan30Days.setDate(initialDate.getDate() - 31);
 
     const resultMoreThan30Days = isPasswordActual(
       moreThan30Days.getFullYear(),
@@ -63,11 +65,11 @@ describe(`Function 'isPasswordActual':`, () => {
       moreThan30Days.getDate()
     );
 
-    expect(resultMoreThan30Days).toBe('Password is actual.');
+    expect(resultMoreThan30Days).toBe('You should change your password.');
 
-    const oneMonthAgo = new Date(today);
+    const oneMonthAgo = new Date(initialDate);
 
-    oneMonthAgo.setMonth(today.month - 1);
+    oneMonthAgo.setMonth(initialDate.getMonth() - 1);
 
     const resultOneMonthAgo = isPasswordActual(
       oneMonthAgo.getFullYear(),
@@ -75,7 +77,7 @@ describe(`Function 'isPasswordActual':`, () => {
       oneMonthAgo.getDate()
     );
 
-    expect(resultOneMonthAgo).toBe('Password is actual.');
+    expect(resultOneMonthAgo).toBe('You should change your password.');
   });
 
   it(`should return 'Immediately change the password!'
