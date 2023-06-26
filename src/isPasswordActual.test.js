@@ -52,7 +52,7 @@ describe(`Functions 'isPasswordActual':`, () => {
     expect(resultOneDayAgo).toBe('Password is actual.');
   });
 
-  it(`should return 'You should change your password.'
+  it(`should return to 'You should change your password.'
    if more than 30 days have passed since the last password change`, () => {
     const initialDate = new Date(today.year, today.month - 1, today.date);
 
