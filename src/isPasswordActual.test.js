@@ -1,6 +1,6 @@
 'use strict';
 
-describe(`Functions 'isPasswordActual':`, () => {
+describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
   const date = new Date(Date.now());
 
@@ -18,7 +18,7 @@ describe(`Functions 'isPasswordActual':`, () => {
     expect(typeof isPasswordActual(2020, 1, 1)).toBe('string');
   });
 
-  it(`should ask to change the password if it was changed a year ago`, () => {
+  it(`should ask change the password if it was changed a year ago`, () => {
     const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
 
     expect(lastYear).toBe('Immediately change the password!');
@@ -52,8 +52,8 @@ describe(`Functions 'isPasswordActual':`, () => {
     expect(resultOneDayAgo).toBe('Password is actual.');
   });
 
-  it(`should return to 'You should change your password.'
-   if more than 30 days have passed since the last password change`, () => {
+  it(`should return 'You should change your password.'
+     if more than 30 days have passed since the last password change`, () => {
     const initialDate = new Date(today.year, today.month - 1, today.date);
 
     const moreThan30Days = new Date(initialDate);
@@ -79,36 +79,5 @@ describe(`Functions 'isPasswordActual':`, () => {
     );
 
     expect(resultOneMonthAgo).toBe('You should change your password.');
-  });
-
-  it(`should return 'Immediately change the password!'
-     if more than 60 days have passed since the last password change`, () => {
-    const passwordChanged61DaysAgo = new Date(today);
-
-    passwordChanged61DaysAgo.setDate(today.date - 61);
-
-    if (passwordChanged61DaysAgo > new Date()) {
-      expect(
-        isPasswordActual(
-          passwordChanged61DaysAgo.getFullYear(),
-          passwordChanged61DaysAgo.getMonth() + 1,
-          passwordChanged61DaysAgo.getDate()
-        )
-      ).toBe('Immediately change the password!');
-    }
-
-    const passwordChanged2MonthsAgo = new Date(today);
-
-    passwordChanged2MonthsAgo.setMonth(today.month - 2);
-
-    if (passwordChanged2MonthsAgo > new Date()) {
-      expect(
-        isPasswordActual(
-          passwordChanged2MonthsAgo.getFullYear(),
-          passwordChanged2MonthsAgo.getMonth() + 1,
-          passwordChanged2MonthsAgo.getDate()
-        )
-      ).toBe('Immediately change the password!');
-    }
   });
 });
