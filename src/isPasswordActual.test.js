@@ -1,8 +1,9 @@
 'use strict';
 
-describe(`Function 'isPasswordActual':`, () => {
+describe(`Functions 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
   const date = new Date(Date.now());
+
   const today = {
     year: date.getUTCFullYear(),
     month: date.getMonth() + 1,
