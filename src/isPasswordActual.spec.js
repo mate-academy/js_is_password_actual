@@ -22,7 +22,7 @@ describe('isPasswordActual', () => {
   it('Should return a string', () => {
     const message = isPasswordActual(t.year, t.month, t.date);
 
-    expect(message).toBeInstanceOf(String);
+    expect(typeof message).toBe('string');
   });
 
   it(`If 30 days or less have passed since the last 
