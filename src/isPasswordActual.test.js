@@ -18,12 +18,18 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should ask to change the password if last chamge was 30+ day ago`, () => {
-    expect(isPasswordActual(today.year, today.month - 1, today.month - 4))
+    const changePass
+     = isPasswordActual(today.year, today.month - 1, today.month - 4);
+
+    expect(changePass)
       .toBe('You should change your password.');
   });
 
   it(`should return 'Password is actual' if change was < 30 days ago`, () => {
-    expect(isPasswordActual(today.year, today.month, today.month - 4))
+    const actualPass
+     = isPasswordActual(today.year, today.month, today.month - 4);
+
+    expect(actualPass)
       .toBe('Password is actual.');
   });
 
