@@ -1,28 +1,48 @@
-'use strict';
+"use strict";
 
-/**
- * @param {number} year
- * @param {number} month
- * @param {number} date
- *
- * @returns {string}
- */
-function isPasswordActual(year, month, date) {
-  const actualDate = new Date(Date.now()).getTime();
-  const lastEditedDate = new Date(year, month - 1, date).getTime();
-  const diff = actualDate - lastEditedDate;
+describe(`Function 'isPasswordActual':`, () => {
+  const isPasswordActual = require("./isPasswordActual");
+  const date = new Date(Date.now());
+  const today = {
+    year: date.getUTCFullYear(),
+    month: date.getMonth() + 1,
+    date: date.getDate(),
+  };
 
-  const days = Math.floor(diff / (60 * 60 * 24 * 1000));
+  it(`should be declared`, () => {
+    expect(isPasswordActual).toBeInstanceOf(Function);
+  });
 
-  if (days > 60) {
-    return 'Immediately change the password!';
-  }
+  it(`should return a string`, () => {
+    const result = isPasswordActual(today.year, today.month, today.date);
+    expect(typeof result).toBe("string");
+  });
 
-  if (days > 30) {
-    return 'You should change your password.';
-  }
+  it(`should ask to change the password if it was changed a year ago`, () => {
+    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
+    expect(lastYear).toBe("Immediately change the password!");
+  });
 
-  return 'Password is actual.';
-}
+  it(`should ask to change the password if it was changed 31 days ago`, () => {
+    const lastMonth = isPasswordActual(
+      today.year,
+      today.month,
+      today.date - 31
+    );
+    expect(lastMonth).toBe("You should change your password.");
+  });
 
-module.exports = isPasswordActual;
+  it(`should not ask to change the password if it was changed 30 days ago`, () => {
+    const lastMonth = isPasswordActual(
+      today.year,
+      today.month,
+      today.date - 30
+    );
+    expect(lastMonth).toBe("Password is actual.");
+  });
+
+  it(`should not ask to change the password if it was changed today`, () => {
+    const today = isPasswordActual(today.year, today.month, today.date);
+    expect(today).toBe("Password is actual.");
+  });
+});
