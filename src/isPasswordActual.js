@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @param {number} year
@@ -15,14 +15,14 @@ function isPasswordActual(year, month, date) {
   const days = Math.floor(diff / (60 * 60 * 24 * 1000));
 
   if (days > 60) {
-    return 'Immediately change the password!';
+    return "Immediately change the password!";
   }
 
   if (days > 30) {
-    return 'You should change your password.';
+    return "You should change your password.";
   }
 
-  return 'Password is actual.';
+  return "Password is actual.";
 }
 
 module.exports = isPasswordActual;
