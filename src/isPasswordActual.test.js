@@ -14,15 +14,34 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should return a string`, () => {
-
+    expect(typeof(isPasswordActual(date))).toBe('string');
   });
 
-  it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
+  it(`should request password change if was changed a year ago`, () => {
+    const lastUpdate = isPasswordActual(today.year - 1, today.month, today.date);
 
-    expect(lastYear)
+    expect(lastUpdate)
       .toBe('Immediately change the password!');
   });
+  
+  it(`should request password change if last changed was more than 60 days`, () => {
+    const lastUpdate = isPasswordActual(today.year, today.month - 2, today.date - 1);
 
-  // write more tests here
+    expect(lastUpdate)
+      .toBe('Immediately change the password!');
+  });
+  
+  it(`should return actual if last changed was 30 days or less`, () => {
+    const lastUpdate = isPasswordActual(today.year, today.month - 1, today.date);
+
+    expect(lastUpdate)
+      .toBe('Password is actual.');
+  });
+  
+  it(`should return ask to change password if last changed was more than 30 days`, () => {
+    const lastUpdate = isPasswordActual(today.year, today.month - 1, today.date - 1);
+
+    expect(lastUpdate)
+      .toBe('You should change your password.');
+  });
 });
