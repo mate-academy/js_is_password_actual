@@ -28,7 +28,7 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it('passed more than 30 but less than 60 days', () => {
-    const result = isPasswordActual(year, month - 1, day);
+    const result = isPasswordActual(year, month - 1, day - 3);
 
     expect(result).toBe('You should change your password.');
   });
