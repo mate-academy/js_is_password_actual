@@ -25,4 +25,4 @@ function isPasswordActual(year, month, date) {
   return 'Password is actual.';
 }
 
-module.exports = isPasswordActual;
+module.exports = { isPasswordActual };
