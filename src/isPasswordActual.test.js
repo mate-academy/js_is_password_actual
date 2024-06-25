@@ -26,15 +26,13 @@ describe(`Function 'isPasswordActual':`, () => {
       .toBe('Immediately change the password!');
   });
 
-  it('should return "Password is actual."'
-    + 'when the password was changed today', () => {
+  it('should return "Password is actual" if changed today', () => {
     const result = isPasswordActual(today.year, today.month, today.date);
 
     expect(result).toBe('Password is actual.');
   });
 
-  it('should return "You should change your password."'
-    + 'if the password was changed more than 30 days ago', () => {
+  it('should return "Change your password" if changed over 30 days ago', () => {
     const thirtyOneDaysAgo = new Date(
       today.year, today.month - 1, today.date - 31);
     const result = isPasswordActual(thirtyOneDaysAgo.getFullYear(),
@@ -43,8 +41,7 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(result).toBe('You should change your password.');
   });
 
-  it('should return "Password is actual."'
-    + 'when the password was changed 30 days ago', () => {
+  it('should return "Password is actual" if changed 30 days ago', () => {
     const thirtyDaysAgo = new Date(
       today.year, today.month - 1, today.date - 30);
     const result = isPasswordActual(thirtyDaysAgo.getFullYear(),
@@ -53,8 +50,7 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(result).toBe('Password is actual.');
   });
 
-  it('should return "You should change your password."'
-    + 'when the password was changed 31 days ago', () => {
+  it('should return "Change your password" if changed 31 days ago', () => {
     const thirtyOneDaysAgo = new Date(
       today.year, today.month - 1, today.date - 31);
     const result = isPasswordActual(thirtyOneDaysAgo.getFullYear(),
@@ -63,8 +59,7 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(result).toBe('You should change your password.');
   });
 
-  it('should return "You should change your password."'
-    + 'when the password was changed 60 days ago', () => {
+  it('should return "Change your password" if changed 60 days ago', () => {
     const sixtyDaysAgo = new Date(today.year, today.month - 1, today.date - 60);
     const result = isPasswordActual(sixtyDaysAgo.getFullYear(),
       sixtyDaysAgo.getMonth() + 1, sixtyDaysAgo.getDate());
@@ -72,8 +67,7 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(result).toBe('You should change your password.');
   });
 
-  it('should return "Immediately change the password!"'
-    + 'when the password was changed 61 days ago', () => {
+  it('should return "Change the password" if changed 61 days ago', () => {
     const sixtyOneDaysAgo = new Date(
       today.year, today.month - 1, today.date - 61);
     const result = isPasswordActual(sixtyOneDaysAgo.getFullYear(),
@@ -82,8 +76,7 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(result).toBe('Immediately change the password!');
   });
 
-  it('should return "Password is actual."'
-    + 'for passwords changed within the last 30 days', () => {
+  it('should return "Password is actual." if changed within 30 days', () => {
     const withinThirtyDays = new Date(
       today.year, today.month - 1, today.date - 15);
     const result = isPasswordActual(withinThirtyDays.getFullYear(),
@@ -92,8 +85,7 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(result).toBe('Password is actual.');
   });
 
-  it('should return "You should change your password."'
-    + 'for passwords changed between 31 and 60 days ago', () => {
+  it('should return "Change your password."if changed 31-60 days ago', () => {
     const withinThirtyToSixtyDays = new Date(
       today.year, today.month - 1, today.date - 45);
     const result = isPasswordActual(withinThirtyToSixtyDays.getFullYear(),
@@ -103,8 +95,7 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(result).toBe('You should change your password.');
   });
 
-  it('should return "Immediately change the password!"'
-    + 'for passwords changed more than 60 days ago', () => {
+  it('should return "Change your password" if changed over 60 days ago', () => {
     const beyondSixtyDays = new Date(
       today.year, today.month - 1, today.date - 75);
     const result = isPasswordActual(beyondSixtyDays.getFullYear(),
