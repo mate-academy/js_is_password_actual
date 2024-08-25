@@ -2,14 +2,14 @@
 
 describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
-  const date = new Date();
+  const date = new Date(Date.now());
   const today = {
     year: date.getUTCFullYear(),
     month: date.getMonth() + 1,
     date: date.getDate(),
   };
 
-  it(`should be a function`, () => {
+  it(`should be declared`, () => {
     expect(isPasswordActual).toBeInstanceOf(Function);
   });
 
