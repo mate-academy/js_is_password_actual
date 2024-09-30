@@ -10,10 +10,14 @@ describe(`Function 'isPasswordActual':`, () => {
   };
 
   it(`should be declared`, () => {
-    expect(isPasswordActual).toBeInstanceOf(Function);
+    expect(isPasswordActual).toBeDefined();
   });
 
-  it(`should return a string`, () => {});
+  it(`should return a string`, () => {
+    const lastYear = isPasswordActual(today.year, today.month, today.date);
+
+    expect(lastYear).toBeTruthy();
+  });
 
   it(`should ask to change the password if was changed a year ago`, () => {
     const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
