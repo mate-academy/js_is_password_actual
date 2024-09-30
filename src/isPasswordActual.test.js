@@ -25,8 +25,6 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(lastYear).toBe('Immediately change the password!');
   });
 
-  // write more tests here
-
   it(`should say password is actual`, () => {
     const day = new Date();
 
