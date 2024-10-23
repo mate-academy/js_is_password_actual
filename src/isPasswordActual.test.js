@@ -2,7 +2,6 @@
 
 describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
-
   const date = new Date(Date.now());
   const today = {
     year: date.getUTCFullYear(),
@@ -20,40 +19,39 @@ describe(`Function 'isPasswordActual':`, () => {
 
   it(`should ask to change the password if was changed a year ago`, () => {
     const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
-
     expect(lastYear)
       .toBe('Immediately change the password!');
   });
 
-  it(`should return 'Password is actual' 
+  it(`should return error
   message if func has no argument`, () => {
-    const lastYear = isPasswordActual();
-
-    expect(lastYear)
-      .toBe('Password is actual.');
+    expect(() => isPasswordActual())
+      .toThrow();
   });
 
   it(`should return 'You should change your password.' 
   if last password update < 60 days ago`, () => {
-    const lastYear = isPasswordActual(2024, 8, 25);
+    const lastYear = isPasswordActual(2024, 8, 24);
 
     expect(lastYear)
       .toBe('You should change your password.');
   });
 
-  it(`should return 'Password is actual' 
+  it(`should return error message
   if one of arguments is missing`, () => {
-    const lastYear = isPasswordActual(2024, 8);
-
-    expect(lastYear)
-      .toBe('Password is actual.');
+    expect(() => isPasswordActual(2024, 8))
+      .toThrow();
   });
 
-  it(`should return 'Password is actual' 
+  it(`should return error message
   if string used as argument`, () => {
-    const lastYear = isPasswordActual('20g4', '8', '6');
+    expect(() => isPasswordActual('20g4', '8', '6'))
+      .toThrow();
+  });
 
-    expect(lastYear)
+  it(`should return 'Password is actual' message
+  if last password update < 30 days ago `, () => {
+    expect(isPasswordActual(2024, 10, 22))
       .toBe('Password is actual.');
   });
 });
