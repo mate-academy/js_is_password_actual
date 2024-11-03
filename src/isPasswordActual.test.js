@@ -14,15 +14,68 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should return a string`, () => {
-
+    expect(typeof isPasswordActual(today.year, today.month, today.date))
+      .toBe('string');
   });
 
-  it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
+  it(`should return 'Password is actual'`
+    + `,if it was changed 30 or less days ago`, () => {
+    expect(isPasswordActual(today.year, today.month, today.date - 10))
+      .toBe('Password is actual.');
 
-    expect(lastYear)
+    expect(isPasswordActual(today.year, today.month, today.date - 20))
+      .toBe('Password is actual.');
+
+    expect(isPasswordActual(today.year, today.month, today.date - 30))
+      .toBe('Password is actual.');
+  });
+
+  it(`should return 'You should change your password.'`
+    + `,if it was changed more than 30 or less than 61 days ago`, () => {
+    expect(isPasswordActual(today.year, today.month, today.date - 31))
+      .toBe('You should change your password.');
+
+    expect(isPasswordActual(today.year, today.month, today.date - 45))
+      .toBe('You should change your password.');
+
+    expect(isPasswordActual(today.year, today.month, today.date - 60))
+      .toBe('You should change your password.');
+
+    expect(isPasswordActual(today.year, today.month - 1, today.date))
+      .toBe('You should change your password.');
+  });
+
+  it(`should ask to change the password immediately,`
+    + ` if it was changed more than 60 days ago`, () => {
+    expect(isPasswordActual(today.year - 1, today.month, today.date))
+      .toBe('Immediately change the password!');
+
+    expect(isPasswordActual(today.year, today.month - 2, today.date))
+      .toBe('Immediately change the password!');
+
+    expect(isPasswordActual(today.year, today.month, today.date - 61))
       .toBe('Immediately change the password!');
   });
 
-  // write more tests here
+  it('should throw an error if a property is undefined or not a number', () => {
+    expect(() => isPasswordActual(false, today.month, null)).toThrow();
+    expect(() => isPasswordActual(today.year, undefined, today.date)).toThrow();
+
+    expect(() => isPasswordActual(undefined, today.month, today.date))
+      .toThrow();
+    expect(() => isPasswordActual(NaN, false, today.date)).toThrow();
+    expect(() => isPasswordActual(null, false, today.date)).toThrow();
+    expect(() => isPasswordActual('year', false, today.date)).toThrow();
+  });
+
+  it('should not work with future dates', () => {
+    expect(() => isPasswordActual(today.year, today.month, today.date + 1))
+      .toThrow();
+
+    expect(() => isPasswordActual(today.year, today.month + 1, today.date + 1))
+      .toThrow();
+
+    expect(() => isPasswordActual(today.year + 1, today.month, today.date))
+      .toThrow();
+  });
 });
