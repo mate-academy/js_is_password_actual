@@ -1,5 +1,7 @@
 'use strict';
 
+const moment = require('moment');
+
 /**
  * @param {number} year
  * @param {number} month
@@ -14,8 +16,12 @@ function isPasswordActual(year, month, date) {
     throw new Error('inputs should be only numbers');
   }
 
+  if (!moment([year, month, date]).isValid()) {
+    throw new Error('Date is invalid');
+  }
+
   const actualDate = new Date(Date.now()).getTime();
-  const lastEditedDate = new Date(year, month - 1, date).getTime();
+  const lastEditedDate = new Date(`${year}-${month}-${date}`).getTime();
   const diff = actualDate - lastEditedDate;
 
   const days = Math.floor(diff / (60 * 60 * 24 * 1000));
