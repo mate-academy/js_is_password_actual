@@ -16,12 +16,12 @@ function isPasswordActual(year, month, date) {
     throw new Error('inputs should be only numbers');
   }
 
-  if (!moment([year, month, date]).isValid()) {
+  if (!moment([year, month - 1, date]).isValid()) {
     throw new Error('Date is invalid');
   }
 
-  const actualDate = new Date(Date.now()).getTime();
-  const lastEditedDate = new Date(`${year}-${month}-${date}`).getTime();
+  const actualDate = moment().valueOf();
+  const lastEditedDate = moment([year, month - 1, date]);
   const diff = actualDate - lastEditedDate;
 
   const days = Math.floor(diff / (60 * 60 * 24 * 1000));
