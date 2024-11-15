@@ -27,51 +27,61 @@ describe(`Function 'isPasswordActual':`, () => {
 
   it(`should ask to change the password immediately if was changed
     2 months and 2 days ago`, () => {
-    const twoMonthAgo = isPasswordActual(today.year,
+    const pastDate = isPasswordActual(today.year,
       today.month - 2,
       today.date - 2);
 
-    expect(twoMonthAgo)
+    expect(pastDate)
       .toBe('Immediately change the password!');
   });
 
   it(`should ask to change the password immediately if was changed
     61 days ago`, () => {
-    const twoMonthAgo = isPasswordActual(today.year,
+    const pastDate = isPasswordActual(today.year,
       today.month,
       today.date - 61);
 
-    expect(twoMonthAgo)
+    expect(pastDate)
       .toBe('Immediately change the password!');
+  });
+
+  it(`should ask to change the password immediately if was changed
+    60 days ago`, () => {
+    const pastDate = isPasswordActual(today.year,
+      today.month,
+      today.date - 60);
+
+    expect(pastDate)
+      .toBe('You should change your password.');
   });
 
   it(`should ask to change the password if was changed
     31 days ago`, () => {
-    const twoMonthAgo = isPasswordActual(today.year,
+    const pastDate = isPasswordActual(today.year,
       today.month,
       today.date - 31);
 
-    expect(twoMonthAgo)
+    expect(pastDate)
       .toBe('You should change your password.');
   });
 
   it(`should return password is actual if was changed
-    29 days ago`, () => {
-    const twoMonthAgo = isPasswordActual(today.year,
+    28 days ago`, () => {
+    const pastDate = isPasswordActual(today.year,
       today.month,
-      today.date - 29);
+      today.date - 28);
 
-    expect(twoMonthAgo)
+    expect(pastDate)
       .toBe('Password is actual.');
   });
 
   it(`should return password is actual if was changed
     0 days ago`, () => {
-    const twoMonthAgo = isPasswordActual(today.year,
+    const pastDate = isPasswordActual(today.year,
       today.month,
       today.date);
 
-    expect(twoMonthAgo)
+    expect(pastDate)
       .toBe('Password is actual.');
   });
 });
