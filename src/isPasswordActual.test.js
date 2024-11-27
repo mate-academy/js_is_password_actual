@@ -34,7 +34,7 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(result).toBe('You should change your password.');
   });
 
-  it(`should recommend to change the password if was changed
+  it(`should returns the messag if password was changed
       30 days ago or less`, () => {
     const result = isPasswordActual(today.year, today.month, today.date - 29);
 
