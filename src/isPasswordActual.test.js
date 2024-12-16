@@ -83,7 +83,7 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should handle invalid dates gracefully`, () => {
-    const invalidDate = isPasswordActual(2023, 2, 30); // Invalid date
+    const invalidDate = isPasswordActual(2024, 2, 30); // Invalid date
 
     expect(invalidDate).toBe('Password is actual.');
   });
