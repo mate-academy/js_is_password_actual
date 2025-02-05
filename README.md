@@ -1,4 +1,4 @@
-# QA: Is password actual ([uk](readme.uk.md))
+# sQA: Is password actual ([uk](readme.uk.md))
 
 Write tests for the `isPasswordActual` function. This function:
 
