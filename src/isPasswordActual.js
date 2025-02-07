@@ -7,10 +7,16 @@
  *
  * @returns {string}
  */
-function isPasswordActual(year, month, date) {
+function isPasswordActual(year, month, day) {
   const actualDate = new Date(Date.now()).getTime();
-  const lastEditedDate = new Date(year, month - 1, date).getTime();
+  const lastEditedDate = new Date(year, month - 1, day).getTime();
   const diff = actualDate - lastEditedDate;
+
+  if (year !== Math.trunc(year) || month !== Math.trunc(month)
+    || day !== Math.trunc(day) || diff < 0 || year <= 0
+    || month <= 0 || day <= 0 || month > 12 || day > 31) {
+    return 'Please enter a valid date';
+  }
 
   const days = Math.floor(diff / (60 * 60 * 24 * 1000));
 
