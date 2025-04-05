@@ -9,20 +9,41 @@ describe(`Function 'isPasswordActual':`, () => {
     date: date.getDate(),
   };
 
-  it(`should be declared`, () => {
-    expect(isPasswordActual).toBeInstanceOf(Function);
+  it(`be declared`, () => {
+    expect(isPasswordActual)
+      .toBeInstanceOf(Function);
   });
 
-  it(`should return a string`, () => {
-
+  it(`return a string`, () => {
+    expect(typeof isPasswordActual(today.year, today.month, today.date))
+      .toBe('string');
   });
 
-  it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
+  it(`ask to change the password if was changed more than 60 days ago`, () => {
+    const lastYear = isPasswordActual(
+      today.year, today.month - 2, today.date - 1
+    );
 
     expect(lastYear)
       .toBe('Immediately change the password!');
   });
 
-  // write more tests here
+  it(`remind to change the password
+    if was changed more than 30 and less then 60 days ago`, () => {
+    const lastYear = isPasswordActual(
+      today.year, today.month - 1, today.date - 7
+    );
+
+    expect(lastYear)
+      .toBe('You should change your password.');
+  });
+
+  it(`message if the password is up to date`, () => {
+    const lastYear = isPasswordActual(
+      today.year, today.month, today.date - 7
+    );
+
+    expect(lastYear)
+      .toBe('Password is actual.');
+  });
 });
