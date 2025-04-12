@@ -14,15 +14,75 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should return a string`, () => {
+    const result = isPasswordActual(today.year, today.month, today.date);
 
+    expect(typeof result).toBe('string');
   });
 
-  it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
+  // eslint-disable-next-line max-len
+  it(`should return 'Password is actual.' if password was updated today`, () => {
+    const result = isPasswordActual(today.year, today.month, today.date);
 
-    expect(lastYear)
-      .toBe('Immediately change the password!');
+    expect(result).toBe('Password is actual.');
   });
 
-  // write more tests here
+  // eslint-disable-next-line max-len
+  it(`should return 'Password is actual.' if password was updated 30 days ago`, () => {
+    const pastDate = new Date();
+
+    pastDate.setDate(pastDate.getDate() - 30);
+
+    const result = isPasswordActual(
+      pastDate.getFullYear(),
+      pastDate.getMonth() + 1,
+      pastDate.getDate()
+    );
+
+    expect(result).toBe('Password is actual.');
+  });
+
+  // eslint-disable-next-line max-len
+  it(`should return 'You should change your password.' if password was updated 31 days ago`, () => {
+    const pastDate = new Date();
+
+    pastDate.setDate(pastDate.getDate() - 31);
+
+    const result = isPasswordActual(
+      pastDate.getFullYear(),
+      pastDate.getMonth() + 1,
+      pastDate.getDate()
+    );
+
+    expect(result).toBe('You should change your password.');
+  });
+
+  // eslint-disable-next-line max-len
+  it(`should return 'You should change your password.' if password was updated 60 days ago`, () => {
+    const pastDate = new Date();
+
+    pastDate.setDate(pastDate.getDate() - 60);
+
+    const result = isPasswordActual(
+      pastDate.getFullYear(),
+      pastDate.getMonth() + 1,
+      pastDate.getDate()
+    );
+
+    expect(result).toBe('You should change your password.');
+  });
+
+  // eslint-disable-next-line max-len
+  it(`should return 'Immediately change the password!' if password was updated 61 days ago`, () => {
+    const pastDate = new Date();
+
+    pastDate.setDate(pastDate.getDate() - 61);
+
+    const result = isPasswordActual(
+      pastDate.getFullYear(),
+      pastDate.getMonth() + 1,
+      pastDate.getDate()
+    );
+
+    expect(result).toBe('Immediately change the password!');
+  });
 });
