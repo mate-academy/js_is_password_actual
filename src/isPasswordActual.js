@@ -1,5 +1,7 @@
 'use strict';
 
+const moment = require('moment');
+
 /**
  * @param {number} year
  * @param {number} month
@@ -8,11 +10,27 @@
  * @returns {string}
  */
 function isPasswordActual(year, month, date) {
-  const actualDate = new Date(Date.now()).getTime();
-  const lastEditedDate = new Date(year, month - 1, date).getTime();
+  if (!(year && typeof year === 'number')
+    || !(month && typeof month === 'number')
+    || !(date && typeof date === 'number')) {
+    throw new Error('inputs should be only numbers');
+  }
+
+  if (!moment([year, month - 1, date]).isValid()) {
+    throw new Error('Date is invalid');
+  }
+
+  const actualDate = moment().valueOf();
+  const lastEditedDate = moment([year, month - 1, date]);
   const diff = actualDate - lastEditedDate;
 
   const days = Math.floor(diff / (60 * 60 * 24 * 1000));
+
+  if (days < 0) {
+    throw new Error(
+      'input date cannot be in the future, only today or earlier'
+    );
+  }
 
   if (days > 60) {
     return 'Immediately change the password!';
