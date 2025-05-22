@@ -26,23 +26,43 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should ask to change the password if was changed a 60 days ago`, () => {
-    const result = isPasswordActual(today.year, today.month - 2, today.date);
+    const pastDate = new Date();
+
+    pastDate.setDate(pastDate.getDate() - 61);
+
+    const result = isPasswordActual(
+      pastDate.getFullYear(),
+      pastDate.getMonth() + 1,
+      pastDate.getDate()
+    );
 
     expect(result).toBe('Immediately change the password!');
   });
 
   it('should respond about the desired password change', () => {
+    const pastDate = new Date();
+
+    pastDate.setDate(pastDate.getDate() - 31);
+
     const result = isPasswordActual(
-      today.year,
-      today.month - 1,
-      today.date - 1
+      pastDate.getFullYear(),
+      pastDate.getMonth() + 1,
+      pastDate.getDate()
     );
 
     expect(result).toBe('You should change your password.');
   });
 
   it('should respond with the current password', () => {
-    const result = isPasswordActual(today.year, today.month, today.date - 30);
+    const pastDate = new Date();
+
+    pastDate.setDate(pastDate.getDate() - 30);
+
+    const result = isPasswordActual(
+      pastDate.getFullYear(),
+      pastDate.getMonth() + 1,
+      pastDate.getDate()
+    );
 
     expect(result).toBe('Password is actual.');
   });
