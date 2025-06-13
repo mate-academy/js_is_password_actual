@@ -28,7 +28,7 @@ describe(`Function 'isPasswordActual':`, () => {
   it('should recomend to change the password if was changed a 30d ago', () => {
     const lastMounth = isPasswordActual(
       today.year,
-      today.month - 1,
+      today.month === 1 ? 12 : today.month - 1,
       today.date
     );
 
