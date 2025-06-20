@@ -47,3 +47,4 @@ describe(`Function 'isPasswordActual':`, () => {
       .toBe('Password is actual.');
   });
 });
+
