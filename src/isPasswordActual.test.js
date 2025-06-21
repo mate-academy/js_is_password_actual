@@ -1,6 +1,9 @@
 'use strict';
 
 describe(`Function 'isPasswordActual':`, () => {
+  jest.useFakeTimers();
+  jest.setSystemTime(new Date(Date.now()));
+
   const isPasswordActual = require('./isPasswordActual');
 
   it(`should be declared`, () => {
