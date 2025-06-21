@@ -2,27 +2,56 @@
 
 describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
-  const date = new Date(Date.now());
-  const today = {
-    year: date.getUTCFullYear(),
-    month: date.getMonth() + 1,
-    date: date.getDate(),
-  };
 
   it(`should be declared`, () => {
     expect(isPasswordActual).toBeInstanceOf(Function);
   });
 
-  it(`should return a string`, () => {
+  it(`<= 30 days`, () => {
+    const date = new Date(Date.now() - 3600 * 24 * 30 * 1000);
 
+    const result = isPasswordActual(
+      date.getUTCFullYear(),
+      date.getMonth() + 1,
+      date.getDate(),
+    );
+
+    expect(result).toBe('Password is actual.');
   });
 
-  it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
+  it(`> 30 days <= 60 days`, () => {
+    const date = new Date(Date.now() - 3600 * 24 * 31 * 1000);
 
-    expect(lastYear)
-      .toBe('Immediately change the password!');
+    const result = isPasswordActual(
+      date.getUTCFullYear(),
+      date.getMonth() + 1,
+      date.getDate(),
+    );
+
+    expect(result).toBe('You should change your password.');
   });
 
-  // write more tests here
+  it(`exactly 60 days`, () => {
+    const date = new Date(Date.now() - 3600 * 24 * 60 * 1000);
+
+    const result = isPasswordActual(
+      date.getUTCFullYear(),
+      date.getMonth() + 1,
+      date.getDate(),
+    );
+
+    expect(result).toBe('You should change your password.');
+  });
+
+  it(`> 60 days`, () => {
+    const date = new Date(Date.now() - 3600 * 24 * 61 * 1000);
+
+    const result = isPasswordActual(
+      date.getUTCFullYear(),
+      date.getMonth() + 1,
+      date.getDate(),
+    );
+
+    expect(result).toBe('Immediately change the password!');
+  });
 });
