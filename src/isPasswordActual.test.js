@@ -1,28 +1,49 @@
+/* eslint-disable max-len */
 'use strict';
 
-describe(`Function 'isPasswordActual':`, () => {
-  const isPasswordActual = require('./isPasswordActual');
-  const date = new Date(Date.now());
-  const today = {
-    year: date.getUTCFullYear(),
-    month: date.getMonth() + 1,
-    date: date.getDate(),
-  };
+const isPasswordActual = require('./isPasswordActual');
 
-  it(`should be declared`, () => {
-    expect(isPasswordActual).toBeInstanceOf(Function);
+describe('isPasswordActual', () => {
+  const RealDateNow = Date.now;
+
+  // Fixăm "data curentă" la 2021-06-10 pentru testele noastre
+  beforeAll(() => {
+    const fixedDate = new Date(2021, 5, 10).getTime(); // iunie = 5
+
+    global.Date.now = () => fixedDate;
   });
 
-  it(`should return a string`, () => {
-
+  afterAll(() => {
+    global.Date.now = RealDateNow;
   });
 
-  it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
-
-    expect(lastYear)
+  test('should return "Immediately change the password!" if more than 60 days passed', () => {
+    expect(isPasswordActual(2020, 6, 9))
       .toBe('Immediately change the password!');
   });
 
-  // write more tests here
+  test('should return "You should change your password." if more than 30 but <= 60 days passed', () => {
+    expect(isPasswordActual(2021, 5, 1))
+      .toBe('You should change your password.');
+  });
+
+  test('should return "Password is actual." if 30 days or fewer have passed', () => {
+    expect(isPasswordActual(2021, 6, 1))
+      .toBe('Password is actual.');
+  });
+
+  test('should return "Password is actual." if password changed today', () => {
+    expect(isPasswordActual(2021, 6, 10))
+      .toBe('Password is actual.');
+  });
+
+  test('should return "You should change your password." for exactly 31 days', () => {
+    expect(isPasswordActual(2021, 5, 10))
+      .toBe('You should change your password.');
+  });
+
+  test('should return "Immediately change the password!" for exactly 61 days', () => {
+    expect(isPasswordActual(2021, 4, 10))
+      .toBe('Immediately change the password!');
+  });
 });
