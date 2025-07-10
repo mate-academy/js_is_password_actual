@@ -2,27 +2,56 @@
 
 describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
-  const date = new Date(Date.now());
-  const today = {
-    year: date.getUTCFullYear(),
-    month: date.getMonth() + 1,
-    date: date.getDate(),
-  };
+
+  function getDateNDaysAgo(n) {
+    const now = new Date();
+
+    now.setDate(now.getDate() - n);
+
+    return {
+      year: now.getUTCFullYear(),
+      month: now.getMonth() + 1,
+      date: now.getDate(),
+    };
+  }
 
   it(`should be declared`, () => {
     expect(isPasswordActual).toBeInstanceOf(Function);
   });
 
-  it(`should return a string`, () => {
+  it(`should ask to change the password immediately if was
+    changed 61 days ago`, () => {
+    const past = getDateNDaysAgo(61);
+    const actual = isPasswordActual(past.year, past.month, past.date);
 
-  });
-
-  it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
-
-    expect(lastYear)
+    expect(actual)
       .toBe('Immediately change the password!');
   });
 
-  // write more tests here
+  it(`should ask to change the password if was
+    changed 60 days ago`, () => {
+    const past = getDateNDaysAgo(60);
+    const actual = isPasswordActual(past.year, past.month, past.date);
+
+    expect(actual)
+      .toBe('You should change your password.');
+  });
+
+  it(`should ask to change the password if was
+    changed 31 days ago`, () => {
+    const past = getDateNDaysAgo(31);
+    const actual = isPasswordActual(past.year, past.month, past.date);
+
+    expect(actual)
+      .toBe('You should change your password.');
+  });
+
+  it(`should return message 'Password is actual.' if was
+    changed 30 days ago`, () => {
+    const past = getDateNDaysAgo(30);
+    const actual = isPasswordActual(past.year, past.month, past.date);
+
+    expect(actual)
+      .toBe('Password is actual.');
+  });
 });
