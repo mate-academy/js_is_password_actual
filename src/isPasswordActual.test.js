@@ -58,7 +58,7 @@ describe(`Function 'isPasswordActual':`, () => {
     earlyOld.setDate(earlyOld.getDate() - 31);
 
     const result = isPasswordActual(
-      earlyOld.getFullYear(),
+      earlyOld.getUTCFullYear(),
       earlyOld.getMonth() + 1,
       earlyOld.getDate());
 
@@ -84,7 +84,7 @@ describe(`Function 'isPasswordActual':`, () => {
     notOld.setDate(notOld.getDate() - 20);
 
     const result = isPasswordActual(
-      notOld.getFullYear(),
+      notOld.getUTCFullYear(),
       notOld.getMonth() + 1,
       notOld.getDate());
 
