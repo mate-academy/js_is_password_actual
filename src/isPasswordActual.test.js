@@ -2,51 +2,56 @@
 
 describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
-  const date = new Date(Date.now());
-  const today = {
-    year: date.getUTCFullYear(),
-    month: date.getMonth() + 1,
-    date: date.getDate(),
-  };
+  const today = new Date();
+
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1;
+  const date = today.getDate();
 
   it(`should be declared`, () => {
     expect(isPasswordActual).toBeInstanceOf(Function);
   });
 
   it(`should return a string`, () => {
-    const result = isPasswordActual(today.year, today.month, today.date);
+    const result = isPasswordActual(year, month, date);
 
     expect(typeof result).toBe('string');
   });
 
   it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
+    const result = isPasswordActual(year - 1, month, date);
 
-    expect(lastYear)
-      .toBe('Immediately change the password!');
+    expect(result).toBe('Immediately change the password!');
   });
 
-  it.only(`should ask to change the password 
-    if was changed more then month ago`, () => {
-    const lastYear = isPasswordActual(
-      today.year,
-      today.month - 1 || 12,
-      today.date - 1 || 28
+  it(`should ask to change the password 
+    if was changed more than a month ago`, () => {
+    const pastDate = new Date(today);
+
+    pastDate.setMonth(today.getMonth() - 1);
+    pastDate.setDate(today.getDate() - 1);
+
+    const result = isPasswordActual(
+      pastDate.getFullYear(),
+      pastDate.getMonth() + 1,
+      pastDate.getDate()
     );
 
-    expect(lastYear)
-      .toBe('You should change your password.');
+    expect(result).toBe('You should change your password.');
   });
 
   it(`should not ask to change the password 
-    if was changed less then month ago`, () => {
-    const lastYear = isPasswordActual(
-      today.year,
-      today.month,
-      today.date - 1 || 28
+    if was changed less than a month ago`, () => {
+    const recentDate = new Date(today);
+
+    recentDate.setDate(today.getDate() - 1);
+
+    const result = isPasswordActual(
+      recentDate.getFullYear(),
+      recentDate.getMonth() + 1,
+      recentDate.getDate()
     );
 
-    expect(lastYear)
-      .toBe('Password is actual.');
+    expect(result).toBe('Password is actual.');
   });
 });
