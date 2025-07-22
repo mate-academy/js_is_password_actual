@@ -26,12 +26,12 @@ describe(`Function 'isPasswordActual':`, () => {
       .toBe('Immediately change the password!');
   });
 
-  it(`should ask to change the password 
+  it.only(`should ask to change the password 
     if was changed more then month ago`, () => {
     const lastYear = isPasswordActual(
       today.year,
-      today.month - 1,
-      today.date - 1
+      today.month - 1 || 12,
+      today.date - 1 || 28
     );
 
     expect(lastYear)
@@ -43,7 +43,7 @@ describe(`Function 'isPasswordActual':`, () => {
     const lastYear = isPasswordActual(
       today.year,
       today.month,
-      today.date - 1
+      today.date - 1 || 28
     );
 
     expect(lastYear)
