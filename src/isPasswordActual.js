@@ -19,6 +19,7 @@ function isPasswordActual(year, month, date) {
     return 'The data of last password change is incorrect!';
   }
 
+  const oneDayInMilisecond = 86400000;
   const actual = new Date();
   const actualYear = actual.getFullYear();
   const actualMonth = actual.getMonth() + 1;
@@ -34,7 +35,7 @@ function isPasswordActual(year, month, date) {
 
     default:
       const dateInMilisecond = new Date(`${year}-02-28`).getTime();
-      const nextDay = new Date(dateInMilisecond + 86400000).getDate();
+      const nextDay = new Date(dateInMilisecond + oneDayInMilisecond).getDate();
       const isLeapYear = nextDay === 29;
       const monthLength = isLeapYear
         ? [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -54,7 +55,7 @@ function isPasswordActual(year, month, date) {
   const lastEditedDate = new Date(year, month - 1, date).getTime();
   const diff = actualDate - lastEditedDate;
 
-  const days = Math.floor(diff / (60 * 60 * 24 * 1000));
+  const days = Math.floor(diff / oneDayInMilisecond);
 
   if (days > 60) {
     return 'Immediately change the password!';
