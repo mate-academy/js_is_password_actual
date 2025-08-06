@@ -27,7 +27,7 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should return 'Password is actual' if changed today`, () => {
-    const result = isPasswordActual(today.year, today.monyh, today.data);
+    const result = isPasswordActual(today.year, today.month, today.data);
 
     expect(result).toBe('Password is actual.');
   });
