@@ -19,25 +19,38 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(typeof r).toBe('string');
   });
 
-  it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
+  it(`should ask to change the password if was changed 61 days ago or more`, () => {
+    const date = isPasswordActual(today.year, today.month, today.date - 61);
 
-    expect(lastYear)
+    expect(date)
       .toBe('Immediately change the password!');
   });
 
-  it(`should prepare to change the password if was changed a month ago`, () => {
-    const lastMonth = isPasswordActual(today.year, today.month - 1, today.date);
+  it(`should ask to change the password if was changed 60 days ago`, () => {
+    const date = isPasswordActual(today.year, today.month, today.date - 60);
 
-    expect(lastMonth)
+    expect(date)
       .toBe('You should change your password.');
   });
 
+  it(`should ask to change the password if was changed 31 days ago`, () => {
+    const date = isPasswordActual(today.year, today.month, today.date - 31);
 
-  it(`should say everything is ok`, () => {
-    const lastWeek = isPasswordActual(today.year, today.month, today.date - 7);
+    expect(date)
+      .toBe('You should change your password.');
+  });
 
-    expect(lastWeek)
+  it(`should say everything is ok if was changed 30 days ago`, () => {
+    const date = isPasswordActual(today.year, today.month, today.date - 30);
+
+    expect(date)
+      .toBe('Password is actual.');
+  });
+
+  it(`should say everything is ok if was changed yesterday`, () => {
+    const date = isPasswordActual(today.year, today.month, today.date - 1);
+
+    expect(date)
       .toBe('Password is actual.');
   });
 });
