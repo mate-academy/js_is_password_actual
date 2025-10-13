@@ -3,7 +3,7 @@
 const isPasswordActual = require('./isPasswordActual');
 
 describe(`Function 'isPasswordActual':`, () => {
-  // Stały timestamp, aby testy były deterministyczne
+  // Stały timestamp dla deterministycznych testów
   const FIXED_TS = new Date('2025-01-01T00:00:00').getTime();
 
   beforeAll(() => {
@@ -32,14 +32,20 @@ describe(`Function 'isPasswordActual':`, () => {
 
   it(`should return "Immediately change the password!" for 1 year ago`, () => {
     const lastYear = isPasswordActual(
-      today.year - 1, today.month, today.day
+      today.year - 1,
+      today.month,
+      today.day
     );
     const expected = 'Immediately change the password!';
     expect(lastYear).toBe(expected);
   });
 
   it(`should return "Password is actual." for today`, () => {
-    const todayMsg = isPasswordActual(today.year, today.month, today.day);
+    const todayMsg = isPasswordActual(
+      today.year,
+      today.month,
+      today.day
+    );
     const expected = 'Password is actual.';
     expect(todayMsg).toBe(expected);
   });
@@ -48,7 +54,9 @@ describe(`Function 'isPasswordActual':`, () => {
     const past = new Date(Date.now());
     past.setDate(past.getDate() - 31);
     const msg = isPasswordActual(
-      past.getFullYear(), past.getMonth() + 1, past.getDate()
+      past.getFullYear(),
+      past.getMonth() + 1,
+      past.getDate()
     );
     const expected = 'You should change your password.';
     expect(msg).toBe(expected);
@@ -58,7 +66,9 @@ describe(`Function 'isPasswordActual':`, () => {
     const past = new Date(Date.now());
     past.setDate(past.getDate() - 61);
     const msg = isPasswordActual(
-      past.getFullYear(), past.getMonth() + 1, past.getDate()
+      past.getFullYear(),
+      past.getMonth() + 1,
+      past.getDate()
     );
     const expected = 'Immediately change the password!';
     expect(msg).toBe(expected);
@@ -68,7 +78,9 @@ describe(`Function 'isPasswordActual':`, () => {
     const past = new Date(Date.now());
     past.setDate(past.getDate() - 30);
     const msg = isPasswordActual(
-      past.getFullYear(), past.getMonth() + 1, past.getDate()
+      past.getFullYear(),
+      past.getMonth() + 1,
+      past.getDate()
     );
     const expected = 'Password is actual.';
     expect(msg).toBe(expected);
@@ -78,10 +90,13 @@ describe(`Function 'isPasswordActual':`, () => {
     const past = new Date(Date.now());
     past.setDate(past.getDate() - 60);
     const msg = isPasswordActual(
-      past.getFullYear(), past.getMonth() + 1, past.getDate()
+      past.getFullYear(),
+      past.getMonth() + 1,
+      past.getDate()
     );
     const expected = 'You should change your password.';
     expect(msg).toBe(expected);
   });
 });
+
 
