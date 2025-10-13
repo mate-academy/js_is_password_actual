@@ -2,11 +2,11 @@
 
 describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
-  const date = new Date(Date.now());
+  const now = new Date();
   const today = {
-    year: date.getUTCFullYear(),
-    month: date.getMonth() + 1,
-    date: date.getDate(),
+    year: now.getUTCFullYear(),
+    month: now.getMonth() + 1,
+    date: now.getDate(),
   };
 
   it(`should be declared`, () => {
@@ -18,27 +18,40 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(typeof result).toBe('string');
   });
 
-  it(`should ask to change the password if it was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
-    expect(lastYear).toBe('Immediately change the password!');
+  it(`should return "Immediately change the password!" for 1 year ago`, () => {
+    const lastYear = isPasswordActual(
+      today.year - 1, today.month, today.date
+    );
+    const expected = 'Immediately change the password!';
+    expect(lastYear).toBe(expected);
   });
 
-  it(`should return "Password is actual." if password was changed today`, () => {
-    const todayMsg = isPasswordActual(today.year, today.month, today.date);
-    expect(todayMsg).toBe('Password is actual.');
+  it(`should return "Password is actual." for today`, () => {
+    const todayMsg = isPasswordActual(
+      today.year, today.month, today.date
+    );
+    const expected = 'Password is actual.';
+    expect(todayMsg).toBe(expected);
   });
 
-  it(`should return "You should change your password." if changed 31 days ago`, () => {
-    const pastDate = new Date();
-    pastDate.setDate(pastDate.getDate() - 31);
-    const msg = isPasswordActual(pastDate.getFullYear(), pastDate.getMonth() + 1, pastDate.getDate());
-    expect(msg).toBe('You should change your password.');
+  it(`should return "You should change your password." for 31 days ago`, () => {
+    const past = new Date();
+    past.setDate(past.getDate() - 31);
+    const msg = isPasswordActual(
+      past.getFullYear(), past.getMonth() + 1, past.getDate()
+    );
+    const expected = 'You should change your password.';
+    expect(msg).toBe(expected);
   });
 
-  it(`should return "Immediately change the password!" if changed 61 days ago`, () => {
-    const pastDate = new Date();
-    pastDate.setDate(pastDate.getDate() - 61);
-    const msg = isPasswordActual(pastDate.getFullYear(), pastDate.getMonth() + 1, pastDate.getDate());
-    expect(msg).toBe('Immediately change the password!');
+  it(`should return "Immediately change the password!" for 61 days ago`, () => {
+    const past = new Date();
+    past.setDate(past.getDate() - 61);
+    const msg = isPasswordActual(
+      past.getFullYear(), past.getMonth() + 1, past.getDate()
+    );
+    const expected = 'Immediately change the password!';
+    expect(msg).toBe(expected);
   });
 });
+
