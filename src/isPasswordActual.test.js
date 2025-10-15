@@ -1,28 +1,29 @@
 'use strict';
 
-describe(`Function 'isPasswordActual':`, () => {
-  const isPasswordActual = require('./isPasswordActual');
-  const date = new Date(Date.now());
-  const today = {
-    year: date.getUTCFullYear(),
-    month: date.getMonth() + 1,
-    date: date.getDate(),
-  };
+const isPasswordActual = require('./isPasswordActual');
 
-  it(`should be declared`, () => {
-    expect(isPasswordActual).toBeInstanceOf(Function);
+describe('Example assertions from task', () => {
+  const MOCK_TODAY = new Date('2021-06-10T00:00:00Z');
+
+  beforeAll(() => {
+    jest.spyOn(Date, 'now').mockReturnValue(MOCK_TODAY.getTime());
   });
 
-  it(`should return a string`, () => {
-
+  afterAll(() => {
+    jest.restoreAllMocks();
   });
 
-  it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
-
-    expect(lastYear)
+  it('should return "Immediately change the password!"', () => {
+    expect(isPasswordActual(2020, 6, 9))
       .toBe('Immediately change the password!');
   });
 
-  // write more tests here
+  it('should return "Password is actual."', () => {
+    expect(isPasswordActual(2021, 6, 1)).toBe('Password is actual.');
+  });
+
+  it('should return "You should change your password."', () => {
+    expect(isPasswordActual(2021, 5, 1))
+      .toBe('You should change your password.');
+  });
 });
