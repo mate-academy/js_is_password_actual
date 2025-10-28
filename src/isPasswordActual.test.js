@@ -35,6 +35,13 @@ describe(`Function 'isPasswordActual':`, () => {
     expect(actual).toBe('Immediately change the password!');
   });
 
+  it(`should іmmediately to change the password
+    if was changed 2020-6-9`, () => {
+    const actual = isPasswordActual(2020, 6, 9);
+
+    expect(actual).toBe('Immediately change the password!');
+  });
+
   it(`should to change the password
     if was changed 60 days ago`, () => {
     const actual = isPasswordActual(2021, 4, 11);
@@ -45,6 +52,13 @@ describe(`Function 'isPasswordActual':`, () => {
   it(`should to change the password
     if was changed 53 days ago`, () => {
     const actual = isPasswordActual(2021, 4, 18);
+
+    expect(actual).toBe('You should change your password.');
+  });
+
+  it(`should to change the password
+    if was changed 2021-5-1`, () => {
+    const actual = isPasswordActual(2021, 5, 1);
 
     expect(actual).toBe('You should change your password.');
   });
@@ -66,6 +80,13 @@ describe(`Function 'isPasswordActual':`, () => {
   it(`password is actual
     if was changed 26 days ago`, () => {
     const actual = isPasswordActual(2021, 5, 15);
+
+    expect(actual).toBe('Password is actual.');
+  });
+
+  it(`password is actual
+    if was changed 2021-6-1`, () => {
+    const actual = isPasswordActual(2021, 6, 1);
 
     expect(actual).toBe('Password is actual.');
   });
