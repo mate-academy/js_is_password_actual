@@ -2,7 +2,12 @@
 
 describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
- 
+  const date = new Date(Date.now());
+  const today = {
+    year: date.getUTCFullYear(),
+    month: date.getMonth(),
+    date: date.getDate(),
+  };
 
   it(`should be declared`, () => {
     expect(isPasswordActual).toBeInstanceOf(Function);
@@ -59,15 +64,11 @@ describe(`Function 'isPasswordActual':`, () => {
 
     jest.setSystemTime(thirtyOneDaysAgo);
 
-    expect(new Date().toISOString()).toBe(thirtyOneDaysAgo.toISOString());
-
-    expect(
-      isPasswordActual(
-        thirtyOneDaysAgo.getUTCFullYear(),
-        thirtyOneDaysAgo.getUTCMonth(),
-        thirtyOneDaysAgo.getUTCDate()
-      )
-    ).toBe('You should change your password.');
+    // expect(new Date().toISOString()).toBe(thirtyOneDaysAgo.toISOString());
+    // jest.setSystemTime(date);
+    expect(isPasswordActual(today.year, today.month, today.date - 31)).toEqual(
+      'You should change your password.'
+    );
   });
 
   test('mock system time to 60 days ago', () => {
@@ -91,21 +92,17 @@ describe(`Function 'isPasswordActual':`, () => {
 
   test('mock system time to 61 days ago', () => {
     jest.useFakeTimers();
+    // const now61 = new Date();
+    // today.setDate(today.getDate() - 61);
 
-    const now61 = new Date();
-    const sixtyOneDaysAgo = new Date(now61.setDate(now61.getDate() - 61));
+    jest.setSystemTime(date);
 
+    const a = today.year;
+    const b = today.month;
+    const c = today.date - 61;
 
-    jest.setSystemTime(sixtyOneDaysAgo);
-
-    expect(new Date().toISOString()).toBe(sixtyOneDaysAgo.toISOString());
-
-    expect(
-      isPasswordActual(
-        sixtyOneDaysAgo.getUTCFullYear(),
-        sixtyOneDaysAgo.getUTCMonth(),
-        sixtyOneDaysAgo.getDate()
-      )
-    ).toBe('Immediately change the password!');
+    expect(isPasswordActual(a, b, c)).toEqual(
+      'Immediately change the password!'
+    );
   });
 });
