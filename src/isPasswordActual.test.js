@@ -2,11 +2,28 @@
 
 describe('isPasswordActual', () => {
   const isPasswordActual = require('./isPasswordActual');
-  const date = new Date();
+
+  beforeAll(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2023-01-01'));
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   const today = {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    date: date.getDate(),
+    year: 2023,
+    month: 1,
+    date: 1,
+  };
+
+  const daysAgo = (n) => {
+    const date = new Date('2023-01-01');
+
+    date.setDate(date.getDate() - n);
+
+    return date;
   };
 
   it('should be a function', () => {
@@ -42,9 +59,7 @@ describe('isPasswordActual', () => {
   it(
     'returns "You should change your password." if changed 40 days ago',
     () => {
-      const d = new Date();
-
-      d.setDate(d.getDate() - 40);
+      const d = daysAgo(40);
 
       const res = isPasswordActual(
         d.getFullYear(),
@@ -59,9 +74,7 @@ describe('isPasswordActual', () => {
   it(
     'returns "Password is actual." if changed 10 days ago',
     () => {
-      const d = new Date();
-
-      d.setDate(d.getDate() - 10);
+      const d = daysAgo(10);
 
       const res = isPasswordActual(
         d.getFullYear(),
@@ -76,9 +89,7 @@ describe('isPasswordActual', () => {
   it(
     'returns "Password is actual." if changed 30 days ago',
     () => {
-      const d = new Date();
-
-      d.setDate(d.getDate() - 30);
+      const d = daysAgo(30);
 
       const res = isPasswordActual(
         d.getFullYear(),
@@ -93,9 +104,7 @@ describe('isPasswordActual', () => {
   it(
     'returns "You should change your password." if changed 31 days ago',
     () => {
-      const d = new Date();
-
-      d.setDate(d.getDate() - 31);
+      const d = daysAgo(31);
 
       const res = isPasswordActual(
         d.getFullYear(),
@@ -110,9 +119,7 @@ describe('isPasswordActual', () => {
   it(
     'returns "You should change your password." if changed 60 days ago',
     () => {
-      const d = new Date();
-
-      d.setDate(d.getDate() - 60);
+      const d = daysAgo(60);
 
       const res = isPasswordActual(
         d.getFullYear(),
@@ -127,9 +134,7 @@ describe('isPasswordActual', () => {
   it(
     'returns "Immediately change the password!" if changed 61 days ago',
     () => {
-      const d = new Date();
-
-      d.setDate(d.getDate() - 61);
+      const d = daysAgo(61);
 
       const res = isPasswordActual(
         d.getFullYear(),
