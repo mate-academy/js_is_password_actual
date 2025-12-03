@@ -16,8 +16,8 @@ describe(`Function 'isPasswordActual':`, () => {
   it(`should return a string - all is well`, () => {
     const actualDate = isPasswordActual(
       today.year,
-      today.month - 1,
-      today.date
+      today.month,
+      today.date - 30
     );
 
     expect(actualDate)
@@ -28,8 +28,8 @@ describe(`Function 'isPasswordActual':`, () => {
     more then 30 day ago`, () => {
     const actualDate = isPasswordActual(
       today.year,
-      today.month - 1,
-      today.date - 1
+      today.month,
+      today.date - 60
     );
 
     expect(actualDate)
