@@ -1,28 +1,34 @@
 'use strict';
 
+const MOCKED_NOW = new Date('2023-10-27T00:00:00Z').getTime();
+const originalDateNow = Date.now;
+
+Date.now = () => MOCKED_NOW;
+
 describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
-  const date = new Date(Date.now());
-  const today = {
-    year: date.getUTCFullYear(),
-    month: date.getMonth() + 1,
-    date: date.getDate(),
-  };
+
+  afterAll(() => {
+    Date.now = originalDateNow;
+  });
 
   it(`should be declared`, () => {
     expect(isPasswordActual).toBeInstanceOf(Function);
   });
 
-  it(`should return a string`, () => {
-
+  it(`should return a string - all is well`, () => {
+    expect(isPasswordActual(2023, 9, 27)).toBe('Password is actual.');
   });
 
-  it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
+  it(`should ask to change the password if was changed 
+    more then 30 day ago`, () => {
+    expect(isPasswordActual(2023, 9, 26))
+      .toBe('You should change your password.');
+  });
 
-    expect(lastYear)
+  it(`should ask to change the password if was changed
+    more then 60 day ago`, () => {
+    expect(isPasswordActual(2023, 8, 27))
       .toBe('Immediately change the password!');
   });
-
-  // write more tests here
 });
