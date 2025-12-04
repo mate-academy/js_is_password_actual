@@ -3,13 +3,16 @@
 describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
 
-  beforeEach(() => {
-    jest.useFakeTimers();
-    jest.setSystemTime(new Date('2021-06-10'));
+  const MOCKED_NOW = new Date(2024, 2, 1).getTime();
+  let realDateNow;
+
+  beforeAll(() => {
+    realDateNow = Date.now;
+    Date.now = jest.fn(() => MOCKED_NOW);
   });
 
-  afterEach(() => {
-    jest.useRealTimers();
+  afterAll(() => {
+    Date.now = realDateNow;
   });
 
   it(`should be declared`, () => {
