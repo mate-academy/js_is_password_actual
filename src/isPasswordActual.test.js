@@ -2,33 +2,35 @@
 
 describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
-  const date = new Date(Date.now());
-  const today = {
-    year: date.getUTCFullYear(),
-    month: date.getMonth() + 1,
-    date: date.getDate(),
-  };
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date('2021-06-10'));
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
 
   it(`should be declared`, () => {
     expect(isPasswordActual).toBeInstanceOf(Function);
   });
 
   it(`should warn user to change password after 1 month`, () => {
-    const lastMonth
-      = isPasswordActual(today.year, today.month - 1, today.date - 1);
+    const result = isPasswordActual(2021, 5, 15);
 
-    expect(lastMonth).toBe('You should change your password.');
+    expect(result).toBe('You should change your password.');
   });
 
   it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
+    const lastYear = isPasswordActual(2020, 5, 10);
 
     expect(lastYear)
       .toBe('Immediately change the password!');
   });
 
   it(`should confirm password is still actual`, () => {
-    const lastMonth = isPasswordActual(today.year, today.month, today.date - 4);
+    const lastMonth = isPasswordActual(2021, 6, 10);
 
     expect(lastMonth).toBe('Password is actual.');
   });
