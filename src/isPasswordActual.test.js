@@ -33,7 +33,7 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should confirm password is still actual`, () => {
-    const lastMonth = isPasswordActual(2021, 6, 1);
+    const lastMonth = isPasswordActual(2021, 6, 2);
 
     expect(lastMonth).toBe('Password is actual.');
   });
