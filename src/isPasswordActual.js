@@ -8,7 +8,7 @@
  * @returns {string}
  */
 function isPasswordActual(year, month, date) {
-  const actualDate = new Date('2021-06-10').getTime();
+  const actualDate = new Date(Date.now()).getTime();
   const lastEditedDate = new Date(year, month - 1, date).getTime();
   const diff = actualDate - lastEditedDate;
 
