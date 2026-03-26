@@ -82,13 +82,27 @@ describe(`isPasswordActual`, () => {
   });
 
   it(`should handle the end of the month correctly`, () => {
-    const lastDayOfMonth = new Date(today.year, today.month, 0);
+    const lastDayOfMonth = new Date(today.year, today.month - 1, 0);
 
     expect(
       isPasswordActual(
         lastDayOfMonth.getFullYear(),
         lastDayOfMonth.getMonth() + 1,
         lastDayOfMonth.getDate(),
+      ),
+    ).toBe('Password is actual.');
+  });
+
+  it(`should return "Password is actual." if the password was changed exactly 30 days ago`, () => {
+    const thirtyDaysAgo = new Date();
+
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    expect(
+      isPasswordActual(
+        thirtyDaysAgo.getFullYear(),
+        thirtyDaysAgo.getMonth() + 1,
+        thirtyDaysAgo.getDate(),
       ),
     ).toBe('Password is actual.');
   });
