@@ -22,3 +22,4 @@ isPasswordActual(2021, 5, 1) === `You should change your password.`
 
 - [Guideline](https://github.com/mate-academy/js_task-guideline/blob/master/README.md);
 - Read more about [Jest expectations](https://jestjs.io/uk/docs/expect).
+1
