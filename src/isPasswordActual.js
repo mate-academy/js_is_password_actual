@@ -8,21 +8,21 @@
  * @returns {string}
  */
 function isPasswordActual(year, month, date) {
-  const actualDate = new Date(Date.now()).getTime();
-  const lastEditedDate = new Date(year, month - 1, date).getTime();
-  const diff = actualDate - lastEditedDate;
+  const lastUpdateDate = new Date(year, month - 1, date);
+  const currentDate = new Date();
 
-  const days = Math.floor(diff / (60 * 60 * 24 * 1000));
+  const diffTime = currentDate - lastUpdateDate;
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-  if (days > 60) {
-    return 'Immediately change the password!';
+  if (diffDays <= 30) {
+    return 'Password is actual.';
   }
 
-  if (days > 30) {
+  if (diffDays <= 60) {
     return 'You should change your password.';
   }
 
-  return 'Password is actual.';
+  return 'Immediately change the password!';
 }
 
 module.exports = isPasswordActual;
