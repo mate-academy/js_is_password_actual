@@ -2,38 +2,60 @@
 
 describe(`Function 'isPasswordActual':`, () => {
   const isPasswordActual = require('./isPasswordActual');
-  const date = new Date(Date.now());
-  const today = {
-    year: date.getUTCFullYear(),
-    month: date.getMonth() + 1,
-    date: date.getDate(),
-  };
+
+  beforeAll(() => {
+    jest
+      .spyOn(Date, 'now')
+      .mockImplementation(() => Date.UTC(2021, 5, 10, 12, 0, 0));
+  });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
 
   it(`should be declared`, () => {
     expect(isPasswordActual).toBeInstanceOf(Function);
   });
 
-  it(`should return a string`, () => {});
+  it(`should return a string`, () => {
+    const result = isPasswordActual(2021, 6, 1);
 
-  it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
-
-    expect(lastYear).toBe('Immediately change the password!');
+    expect(typeof result).toBe('string');
   });
 
-  it(`should say that the password is actual if it was changed <= 30 days`, () => {
-    const lastYear = isPasswordActual(today.year, today.month, today.date - 5);
+  it(`should return 'Password is actual.' for the example date June 1, 2021 (9 days ago)`, () => {
+    const result = isPasswordActual(2021, 6, 1);
 
-    expect(lastYear).toBe('Password is actual.');
+    expect(result).toBe('Password is actual.');
   });
 
-  it(`should ask to change the password if was changed > 30 < 60 days`, () => {
-    const lastYear = isPasswordActual(
-      today.year,
-      today.month - 1,
-      today.date - 5,
-    );
+  it(`should return 'You should change your password.' for the example date May 1, 2021 (40 days ago)`, () => {
+    const result = isPasswordActual(2021, 5, 1);
 
-    expect(lastYear).toBe('You should change your password.');
+    expect(result).toBe('You should change your password.');
+  });
+
+  it(`should return 'Immediately change the password!' for the example date June 9, 2020 (over a year ago)`, () => {
+    const result = isPasswordActual(2020, 6, 9);
+
+    expect(result).toBe('Immediately change the password!');
+  });
+
+  it(`should return 'Password is actual.' for exactly 30 days ago (May 11, 2021)`, () => {
+    const result = isPasswordActual(2021, 5, 11);
+
+    expect(result).toBe('Password is actual.');
+  });
+
+  it(`should return 'You should change your password.' for exactly 60 days ago (April 11, 2021)`, () => {
+    const result = isPasswordActual(2021, 4, 11);
+
+    expect(result).toBe('You should change your password.');
+  });
+
+  it(`should return 'Immediately change the password!' for 61 days ago (April 10, 2021)`, () => {
+    const result = isPasswordActual(2021, 4, 10);
+
+    expect(result).toBe('Immediately change the password!');
   });
 });
