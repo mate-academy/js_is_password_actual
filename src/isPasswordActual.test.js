@@ -1,25 +1,39 @@
 'use strict';
 
-describe(`Function 'isPasswordActual':`, () => {
-  const isPasswordActual = require('./isPasswordActual');
-  const date = new Date(Date.now());
-  const today = {
-    year: date.getUTCFullYear(),
-    month: date.getMonth() + 1,
-    date: date.getDate(),
-  };
+const isPasswordActual = require('./isPasswordActual');
 
-  it(`should be declared`, () => {
-    expect(isPasswordActual).toBeInstanceOf(Function);
+describe('isPasswordActual', () => {
+  beforeAll(() => {
+    jest.spyOn(Date, 'now').mockReturnValue(new Date(2021, 5, 10).getTime());
   });
 
-  it(`should return a string`, () => {});
-
-  it(`should ask to change the password if was changed a year ago`, () => {
-    const lastYear = isPasswordActual(today.year - 1, today.month, today.date);
-
-    expect(lastYear).toBe('Immediately change the password!');
+  afterAll(() => {
+    Date.now.mockRestore();
   });
 
-  // write more tests here
+  test('returns "Password is actual." for today', () => {
+    expect(isPasswordActual(2021, 6, 10)).toBe('Password is actual.');
+  });
+
+  test('returns "Password is actual." for exactly 30 days', () => {
+    expect(isPasswordActual(2021, 5, 11)).toBe('Password is actual.');
+  });
+
+  test('returns "You should change your password." for 31 days', () => {
+    expect(isPasswordActual(2021, 5, 10)).toBe(
+      'You should change your password.',
+    );
+  });
+
+  test('returns "You should change your password." for exactly 60 days', () => {
+    expect(isPasswordActual(2021, 4, 11)).toBe(
+      'You should change your password.',
+    );
+  });
+
+  test('returns "Immediately change the password!" for 61 days', () => {
+    expect(isPasswordActual(2021, 4, 10)).toBe(
+      'Immediately change the password!',
+    );
+  });
 });
