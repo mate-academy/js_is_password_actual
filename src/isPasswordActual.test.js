@@ -29,25 +29,25 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should return 'Password is actual.' if 30 days have passed`, () => {
-    const result = isPasswordActual(2021, 5, 10);
+    const result = isPasswordActual(2021, 5, 11);
 
     expect(result).toBe('Password is actual.');
   });
 
   it(`should return 'You should change your password.' if 31 days have passed`, () => {
-    const result = isPasswordActual(2021, 5, 9);
+    const result = isPasswordActual(2021, 5, 10);
 
     expect(result).toBe('You should change your password.');
   });
 
   it(`should return 'You should change your password.' if 60 days have passed`, () => {
-    const result = isPasswordActual(2021, 4, 10);
+    const result = isPasswordActual(2021, 4, 11);
 
     expect(result).toBe('You should change your password.');
   });
 
   it(`should return 'Immediately change the password!' if 61 days have passed`, () => {
-    const result = isPasswordActual(2021, 4, 9);
+    const result = isPasswordActual(2021, 4, 10);
 
     expect(result).toBe('Immediately change the password!');
   });

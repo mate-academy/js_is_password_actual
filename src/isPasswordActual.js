@@ -8,11 +8,15 @@
  * @returns {string}
  */
 function isPasswordActual(year, month, date) {
-  const actualDate = new Date(Date.now()).getTime();
-  const lastEditedDate = new Date(year, month - 1, date).getTime();
-  const diff = actualDate - lastEditedDate;
+  const now = new Date(Date.now());
+  const todayUTC = Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate(),
+  );
 
-  const days = Math.floor(diff / (60 * 60 * 24 * 1000));
+  const changedUTC = Date.UTC(year, month - 1, date);
+  const days = Math.floor((todayUTC - changedUTC) / (1000 * 60 * 60 * 24));
 
   if (days > 60) {
     return 'Immediately change the password!';
